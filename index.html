@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>tamagotchiiii</title>
+</head>
+
+<body>
+    <header id="hero">
+        <span class="paws">&#128062;</span>
+        <h1>your tamagotchi</h1>
+    </header>
+    <main>
+        <section id="pet-properties">
+            <h2>Custom design your pet:</h2>
+            <label for="pet-name">Choose your own name: </label>
+            <input type="text" id="pet-name"><br>
+            <label for="pet-random">Or slump a name: </label>
+            <button>Slump Name</button><br>
+            <label for="pet-option">Choose a pet:</label>
+            <select id="pet-option">
+                <option value="dog" selected>dog</option>
+                <option value="ginuepig">ginuepig</option>
+                <option value="cat">cat</option>
+                <option value="pig" selected>pig</option>
+            </select><br>
+            <button class="pet-btn">Create Pet</button>
+        </section>
+        <section id="pet-cards">
+            <!--Cards with made up pets-->
+            <h3>All your pets that wants to play....</h3>
+            <div class="pet-card">
+                <div class="pet-img">
+                    <img src="images/4eefad81-1549-41fd-9a89-a40be795deac.jpg" alt="image of your pet">
+                </div>
+                <h4 class="name">Pet Name</h4>
+                <p class="animal-type">pig</p>
+                <div class="progress-bar">
+                    <button>Nap</button><br>
+                    <progress value="50" max="100"></progress><br>
+                    <button>Play</button><br>
+                    <progress value="50" max="100"></progress><br>
+                    <button>Eat</button><br>
+                    <progress value="50" max="100"></progress>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
