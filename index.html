@@ -15,24 +15,34 @@
         <h1>your tamagotchi</h1>
     </header>
     <main>
-        <section id="pet-properties">
-            <h2>Custom design your pet:</h2>
-            <label for="pet-name">Choose your own name or leave blank for a random name... </label>
-            <input type="text" id="pet-name"><br>
-
-            <label for="pet-option">Choose a pet:</label>
-            <select id="pet-option">
-                <option value="dog" selected>dog</option>
-                <option value="ginuepig">ginuepig</option>
-                <option value="cat">cat</option>
-                <option value="pig" selected>pig</option>
-            </select><br>
-            <button class="pet-btn">Create Pet</button>
-        </section>
+        <div class="data-container">
+            <section id="pet-properties">
+                <h2>Custom design your pet:</h2>
+                <form>
+                    <label for="pet-name">Choose your own name or leave blank for a random name... </label>
+                    <input type="text" id="pet-name" placeholder="write a name or get a random one"><br>
+                    <label for="pet-option">Choose a pet:</label>
+                    <select id="pet-option">
+                        <option value="dog" selected>dog</option>
+                        <option value="ginuepig">ginuepig</option>
+                        <option value="cat">cat</option>
+                        <option value="pig">pig</option>
+                    </select><br>
+                    <button id="pet-btn">Create Pet</button>
+                </form>
+            </section>
+            <section id="pet-activities">
+                <h3>This is what you have done with ure pets so far:</h3><br>
+                <p>Nothing... go play with them!</p>
+            </section>
+        </div>
         <section id="pet-container">
-            <!--Cards with made up pets-->
             <h3>All your pets that wants to play....</h3>
+            <small>Take care of your pet or pets so that they dont die. Make sure you feed and play with them to keep
+                them
+                happy!</small>
             <div id="pet-cards">
+                <!--Cards with max 4 pets-->
                 <div class="pet-card">
                     <div class="pet-img">
                         <img src="images/4eefad81-1549-41fd-9a89-a40be795deac.jpg" alt="image of your pet">
