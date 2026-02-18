@@ -1,9 +1,41 @@
 'use strict';
 
+let petBtn = document.querySelector('#pet-btn');
+let petOption = document.querySelector('#pet-option');
+let petNameInput = document.querySelector('#pet-name');
+
+
+
+
+
+// När Create Pet klickas:
+// Kolla igenom om det finns ett namn i inputfältet
+// Annars kalla på funktionen randomName
+
+petBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    let name = petNameInput.value;
+    let type = petOption.value;
+
+    if (!name) {
+        name = await randomName();
+    }
+
+    const pet = new Pet(name, type);
+    PetManager.addPet(pet)
+})
+
+
+
+
+
+
+
 class Pet {
-    constructor(name, animalType) {
+    constructor(name, petType) {
         this.name = name;
-        this.animalType = animalType;
+        this.petType = petType;
         this.energy = 50;
         this.fullness = 50;
         this.happiness = 50;
@@ -67,5 +99,20 @@ class PetManager {
     removePet(pet) {
         console.log('Removed Pet; ' + pet)
         this.pets = this.pets.filter(p => p !== pet);
+    }
+}
+
+
+
+
+const randomName = async () => {
+    try {
+        const response = await fetch('https://randomuser.me/api/0.8');
+        const data = await response.json();
+        return data.results[0].user.name.first;
+
+    } catch (error) {
+        console.log('API Error; ' + error.message);
+        return 'Unknown';
     }
 }
