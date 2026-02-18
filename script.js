@@ -23,8 +23,10 @@ petBtn.addEventListener('click', async (e) => {
     }
 
     const pet = new Pet(name, type);
-    PetManager.addPet(pet)
-})
+    PetManager.addPet(pet);
+
+    renderPetCard(pet);
+});
 
 
 
@@ -33,9 +35,9 @@ petBtn.addEventListener('click', async (e) => {
 
 
 class Pet {
-    constructor(name, petType) {
+    constructor(name, type) {
         this.name = name;
-        this.petType = petType;
+        this.type = type;
         this.energy = 50;
         this.fullness = 50;
         this.happiness = 50;
@@ -78,6 +80,9 @@ const pet = new Pet('Elton', 'Dog');
 console.log(pet)
 
 
+
+
+
 // Håll koll på alla husdjur
 // Ta bort om någon dör
 // Begränsa till bara 4 stycken
@@ -115,4 +120,30 @@ const randomName = async () => {
         console.log('API Error; ' + error.message);
         return 'Unknown';
     }
+}
+
+
+
+
+
+const renderPetCard = (pet) => {
+    let card = document.createElement('div');
+    card.className = 'pet-card';
+
+    card.innerHTML = `
+        <div class="pet-img">
+                        <img src="images/4eefad81-1549-41fd-9a89-a40be795deac.jpg" alt="image of your pet">
+                    </div>
+                    <h4 class="name">${pet.name}</h4>
+                    <p class="animal-type">${pet.type}</p>
+                    <div class="progress-bar">
+                        <button onclick=${pet.nap()}>Nap</button><br>
+                        <progress value="50" max="100"></progress><br>
+                        <button onclick=${pet.play()}>Play</button><br>
+                        <progress value="50" max="100"></progress><br>
+                        <button onclick=${pet.eat()}>Eat</button><br>
+                        <progress value="50" max="100"></progress>
+                    </div>
+    `;
+
 }
