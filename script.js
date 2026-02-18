@@ -46,4 +46,26 @@ const pet = new Pet('Elton', 'Dog');
 console.log(pet)
 
 
+// Håll koll på alla husdjur
+// Ta bort om någon dör
+// Begränsa till bara 4 stycken
 
+class PetManager {
+    constructor() {
+        this.pets = [];
+    }
+
+    addPet(pet) {
+        if (this.pets.length >= 4) {
+            console.log('To many pets');
+            alert('To many pets! You can only have Max 4 pets...')
+            return;
+        }
+        this.pets.push(pet);
+    }
+
+    removePet(pet) {
+        console.log('Removed Pet; ' + pet)
+        this.pets = this.pets.filter(p => p !== pet);
+    }
+}
