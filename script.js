@@ -1,34 +1,11 @@
 'use strict';
 
+
+
+
 let petBtn = document.querySelector('#pet-btn');
 let petOption = document.querySelector('#pet-option');
 let petNameInput = document.querySelector('#pet-name');
-
-
-
-
-
-// När Create Pet klickas:
-// Kolla igenom om det finns ett namn i inputfältet
-// Annars kalla på funktionen randomName
-
-petBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
-
-    let name = petNameInput.value;
-    let type = petOption.value;
-
-    if (!name) {
-        name = await randomName();
-    }
-
-    const pet = new Pet(name, type);
-    PetManager.addPet(pet);
-
-    renderPetCard(pet);
-});
-
-
 
 
 
@@ -76,12 +53,6 @@ class Pet {
     }
 }
 
-const pet = new Pet('Elton', 'Dog');
-console.log(pet)
-
-
-
-
 
 // Håll koll på alla husdjur
 // Ta bort om någon dör
@@ -106,6 +77,11 @@ class PetManager {
         this.pets = this.pets.filter(p => p !== pet);
     }
 }
+const petManager = new PetManager();
+
+
+
+
 
 
 
@@ -126,6 +102,9 @@ const randomName = async () => {
 
 
 
+
+
+// Kortet som ser bra ut i HTML - ändra det till js och DOM-referenser ist
 const renderPetCard = (pet) => {
     let card = document.createElement('div');
     card.className = 'pet-card';
@@ -147,3 +126,29 @@ const renderPetCard = (pet) => {
     `;
 
 }
+
+
+
+
+
+
+
+// När Create Pet klickas:
+// Kolla igenom om det finns ett namn i inputfältet
+// Annars kalla på funktionen randomName
+
+petBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    let name = petNameInput.value;
+    let type = petOption.value;
+
+    if (!name) {
+        name = await randomName();
+    }
+
+    const pet = new Pet(name, type);
+    petManager.addPet(pet);
+
+    renderPetCard(pet);
+});
