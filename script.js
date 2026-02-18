@@ -6,6 +6,7 @@
 let petBtn = document.querySelector('#pet-btn');
 let petOption = document.querySelector('#pet-option');
 let petNameInput = document.querySelector('#pet-name');
+let petCards = document.querySelector('#pet-cards');
 
 
 
@@ -65,11 +66,9 @@ class PetManager {
 
     addPet(pet) {
         if (this.pets.length >= 4) {
-            console.log('To many pets');
-            alert('To many pets! You can only have Max 4 pets...')
+            alert('To many pets! You can only have Max 4 pets...');
             return;
-        }
-        this.pets.push(pet);
+        } else return this.pets.push(pet);
     }
 
     removePet(pet) {
@@ -77,6 +76,7 @@ class PetManager {
         this.pets = this.pets.filter(p => p !== pet);
     }
 }
+// Instans för att kunna använda add och remove
 const petManager = new PetManager();
 
 
@@ -90,7 +90,8 @@ const randomName = async () => {
     try {
         const response = await fetch('https://randomuser.me/api/0.8');
         const data = await response.json();
-        return data.results[0].user.name.first;
+        console.log(data.results[0].user.name.first)
+        return data.results[0].user.name.first.toUpperCase();
 
     } catch (error) {
         console.log('API Error; ' + error.message);
@@ -106,25 +107,57 @@ const randomName = async () => {
 
 // Kortet som ser bra ut i HTML - ändra det till js och DOM-referenser ist
 const renderPetCard = (pet) => {
-    let card = document.createElement('div');
+    const card = document.createElement('div');
     card.className = 'pet-card';
 
-    card.innerHTML = `
-        <div class="pet-img">
-                        <img src="images/4eefad81-1549-41fd-9a89-a40be795deac.jpg" alt="image of your pet">
-                    </div>
-                    <h4 class="name">${pet.name}</h4>
-                    <p class="animal-type">${pet.type}</p>
-                    <div class="progress-bar">
-                        <button onclick=${pet.nap()}>Nap</button><br>
-                        <progress value="50" max="100"></progress><br>
-                        <button onclick=${pet.play()}>Play</button><br>
-                        <progress value="50" max="100"></progress><br>
-                        <button onclick=${pet.eat()}>Eat</button><br>
-                        <progress value="50" max="100"></progress>
-                    </div>
-    `;
+    const h4 = document.createElement('h4');
+    h4.className = 'name';
+    h4.textContent = pet.name;
+    const p = document.createElement('p');
+    p.className = 'animal-type';
+    p.textContent = pet.type;
 
+
+    card.appendChild(h4);
+    card.appendChild(p);
+    card.appendChild(progress(pet));
+
+    // card.innerHTML = `
+    //                 <div class="progress-bar">
+    //                     <button onclick=${pet.nap()}>Nap</button><br>
+    //                     <progress value="50" max="100"></progress><br>
+    //                     <button onclick=${pet.play()}>Play</button><br>
+    //                     <progress value="50" max="100"></progress><br>
+    //                     <button onclick=${pet.eat()}>Eat</button><br>
+    //                     <progress value="50" max="100"></progress>
+    //                 </div>
+    // `;
+    petCards.appendChild(card);
+}
+
+
+const progress = (pet) => {
+
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+
+    const energyBar = document.createElement('progress');
+    energyBar.max = 100;
+    energyBar.value = pet.energy;
+
+    const happinessBar = document.createElement('progress');
+    happinessBar.max = 100;
+    happinessBar.value = pet.happiness;
+
+    const fullnessBar = document.createElement('progress');
+    fullnessBar.max = 100;
+    fullnessBar.value = pet.fullness;
+
+    progressBar.appendChild(energyBar);
+    progressBar.appendChild(happinessBar);
+    progressBar.appendChild(fullnessBar);
+
+    return progressBar;
 }
 
 

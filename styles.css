@@ -150,6 +150,13 @@ main {
     margin-bottom: 1rem;
 }
 
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .progress-bar button {
     margin-top: 0.8rem;
     width: 100%;
