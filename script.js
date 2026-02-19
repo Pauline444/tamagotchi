@@ -87,9 +87,9 @@ const petManager = new PetManager();
 
 
 class Tamagotchi {
-    constructor(pet, container) {
+    constructor(pet, cards) {
         this.pet = pet;
-        this.container = container;
+        this.cards = cards;
         this.card = null;
 
         this.energy = null;
@@ -100,13 +100,79 @@ class Tamagotchi {
     }
 
     render() {
+        this.card = document.createElement('div');
+        this.card.className = 'pet-card';
 
+        const h4 = document.createElement('h4');
+        h4.className = 'name';
+        h4.textContent = this.pet.name;
+        const p = document.createElement('p');
+        p.className = 'animal-type';
+        p.textContent = this.pet.type;
+
+        this.card.append(h4, p, this.progress());
+        this.cards.appendChild(this.card);
     }
 
-    uppdateBars() {
+    progress() { // skapa ui
+        const progressBar = document.createElement('div');
+        progressBar.className = 'progress-bar';
 
+        const napBtn = document.createElement('button');
+        napBtn.textContent = 'nap';
+        napBtn.addEventListener('click', () => {
+            this.pet.nap()
+            this.uppdateBars()
+        });
+
+        const playBtn = document.createElement('button');
+        playBtn.textContent = 'play';
+        playBtn.addEventListener('click', () => {
+            this.pet.play()
+            this.uppdateBars()
+        });
+
+        const eatBtn = document.createElement('button');
+        eatBtn.textContent = 'eat';
+        eatBtn.addEventListener('click', () => {
+            this.pet.eat()
+            this.uppdateBars()
+        });
+
+        const energyText = document.createElement('small');
+        energyText.textContent = 'energy';
+        energyText.style.marginTop = '15px';
+        this.energyBar = document.createElement('progress');
+        this.energyBar.max = 100;
+        this.energyBar.value = this.pet.energy;
+
+        const happinessText = document.createElement('small');
+        happinessText.textContent = 'happiness';
+        this.happinessBar = document.createElement('progress');
+        this.happinessBar.textContent = 'happiness';
+        this.happinessBar.max = 100;
+        this.happinessBar.value = this.pet.happiness;
+
+        const fullnessText = document.createElement('small');
+        fullnessText.textContent = 'fullness';
+        this.fullnessBar = document.createElement('progress');
+        this.fullnessBar.textContent = 'fullness';
+        this.fullnessBar.max = 100;
+        this.fullnessBar.value = this.pet.fullness;
+
+        progressBar.append(napBtn, playBtn, eatBtn, energyText, this.energyBar, happinessText, this.happinessBar, fullnessText, this.fullnessBar);
+
+        return progressBar;
+    }
+
+    uppdateBars() { // uppdatera ui
+        this.energyBar.value = this.pet.energy;
+        this.happinessBar.value = this.pet.happiness;
+        this.fullnessBar.value = this.pet.fullness;
     }
 }
+
+
 
 
 
@@ -122,70 +188,6 @@ const randomName = async () => {
         console.log('API Error; ' + error.message);
         return 'Unknown';
     }
-}
-
-
-
-
-
-
-
-// Kortet som ser bra ut i HTML - ändra det till js och DOM-referenser ist
-const renderPetCard = (pet) => {
-    const card = document.createElement('div');
-    card.className = 'pet-card';
-
-    const h4 = document.createElement('h4');
-    h4.className = 'name';
-    h4.textContent = pet.name;
-    const p = document.createElement('p');
-    p.className = 'animal-type';
-    p.textContent = pet.type;
-
-
-    card.appendChild(h4);
-    card.appendChild(p);
-    card.appendChild(progress(pet));
-
-    // card.innerHTML = `
-    //                 <div class="progress-bar">
-    //                     <button onclick=${pet.nap()}>Nap</button><br>
-    //                     <progress value="50" max="100"></progress><br>
-    //                     <button onclick=${pet.play()}>Play</button><br>
-    //                     <progress value="50" max="100"></progress><br>
-    //                     <button onclick=${pet.eat()}>Eat</button><br>
-    //                     <progress value="50" max="100"></progress>
-    //                 </div>
-    // `;
-    petCards.appendChild(card);
-}
-
-
-const progress = (pet) => {
-
-    const progressBar = document.createElement('div');
-    progressBar.className = 'progress-bar';
-
-    const energyBar = document.createElement('progress');
-    energyBar.max = 100;
-    energyBar.value = pet.energy;
-
-    // nap btn osv... mellan varje progress
-    // Skapa här eller en egen funktion?
-
-    const happinessBar = document.createElement('progress');
-    happinessBar.max = 100;
-    happinessBar.value = pet.happiness;
-
-    const fullnessBar = document.createElement('progress');
-    fullnessBar.max = 100;
-    fullnessBar.value = pet.fullness;
-
-    progressBar.appendChild(energyBar);
-    progressBar.appendChild(happinessBar);
-    progressBar.appendChild(fullnessBar);
-
-    return progressBar;
 }
 
 
@@ -211,5 +213,5 @@ petBtn.addEventListener('click', async (e) => {
     const pet = new Pet(name, type);
     petManager.addPet(pet);
 
-    renderPetCard(pet);
+    new Tamagotchi(pet, petCards);
 });
