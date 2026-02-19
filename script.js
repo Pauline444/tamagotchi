@@ -56,14 +56,17 @@ class Pet {
 
 
 // Håll koll på alla husdjur
-// Ta bort om någon dör
-// Begränsa till bara 4 stycken
+// hålla lista på pets
+// begränsa till 4
+// starta timers
+// ta bort pet när värde = 0
 
 class PetManager {
     constructor() {
         this.pets = [];
     }
 
+    // BUG pets fylls på även när det är fullt!
     addPet(pet) {
         if (this.pets.length >= 4) {
             alert('To many pets! You can only have Max 4 pets...');
@@ -82,6 +85,28 @@ const petManager = new PetManager();
 
 
 
+
+class Tamagotchi {
+    constructor(pet, container) {
+        this.pet = pet;
+        this.container = container;
+        this.card = null;
+
+        this.energy = null;
+        this.fullness = null;
+        this.happiness = null;
+
+        this.render()
+    }
+
+    render() {
+
+    }
+
+    uppdateBars() {
+
+    }
+}
 
 
 
@@ -144,6 +169,9 @@ const progress = (pet) => {
     const energyBar = document.createElement('progress');
     energyBar.max = 100;
     energyBar.value = pet.energy;
+
+    // nap btn osv... mellan varje progress
+    // Skapa här eller en egen funktion?
 
     const happinessBar = document.createElement('progress');
     happinessBar.max = 100;
