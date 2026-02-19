@@ -55,9 +55,9 @@ class Pet {
 }
 
 
-// Håll koll på alla husdjur
+
+
 // hålla lista på pets
-// begränsa till 4
 // starta timers
 // ta bort pet när värde = 0
 
@@ -66,12 +66,13 @@ class PetManager {
         this.pets = [];
     }
 
-    // BUG pets fylls på även när det är fullt!
     addPet(pet) {
         if (this.pets.length >= 4) {
             alert('To many pets! You can only have Max 4 pets...');
-            return;
-        } else return this.pets.push(pet);
+            return false;
+        }
+        this.pets.push(pet);
+        return true;
     }
 
     removePet(pet) {
@@ -170,6 +171,10 @@ class Tamagotchi {
         this.happinessBar.value = this.pet.happiness;
         this.fullnessBar.value = this.pet.fullness;
     }
+
+    timer() {
+
+    }
 }
 
 
@@ -206,12 +211,14 @@ petBtn.addEventListener('click', async (e) => {
     let name = petNameInput.value;
     let type = petOption.value;
 
+    petNameInput.value = "";
+
     if (!name) {
         name = await randomName();
     }
 
     const pet = new Pet(name, type);
-    petManager.addPet(pet);
+    if (!petManager.addPet(pet)) return; // stoppar om arrayen är full
 
     new Tamagotchi(pet, petCards);
 });
