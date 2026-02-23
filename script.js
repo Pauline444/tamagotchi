@@ -43,6 +43,24 @@ class Pet {
         this.fullness = Math.min(100, Math.max(0, this.fullness));
         this.happiness = Math.min(100, Math.max(0, this.happiness));
     }
+
+    petPicture() {
+
+        if (this.type === 'dog') {
+            let img = document.createElement('img');
+            img.src = 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg';
+            return img;
+        }
+        if (this.type === 'ginuepig') {
+
+        }
+        if (this.type === 'cat') {
+
+        }
+        if (this.type === 'pig') {
+
+        }
+    }
 }
 
 
@@ -98,7 +116,7 @@ class Tamagotchi {
         p.className = 'animal-type';
         p.textContent = this.pet.type;
 
-        this.card.append(h4, p, this.progress());
+        this.card.append(this.pet.petPicture(), h4, p, this.progress());
         this.petCards.appendChild(this.card);
     }
 
