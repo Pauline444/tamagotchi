@@ -3,15 +3,6 @@
 
 
 
-let petBtn = document.querySelector('#pet-btn');
-let petOption = document.querySelector('#pet-option');
-let petNameInput = document.querySelector('#pet-name');
-let petCards = document.querySelector('#pet-cards');
-
-
-
-
-
 class Pet {
     constructor(name, type) {
         this.name = name;
@@ -57,7 +48,6 @@ class Pet {
 
 
 
-// hålla lista på vad man gör med pets
 
 
 class PetManager {
@@ -75,7 +65,7 @@ class PetManager {
     }
 
     removePet(pet) {
-        console.log('Removed Pet; ' + pet)
+        console.log('Removed Pet; ' + pet.name)
         this.pets = this.pets.filter(p => p !== pet);
     }
 }
@@ -87,15 +77,17 @@ const petManager = new PetManager();
 
 
 class Tamagotchi {
-    constructor(pet, cards) {
+    constructor(pet, activities) {
         this.pet = pet;
-        this.cards = cards;
+        this.activities = activities;
 
         this.render()
         this.decreaseTime()
     }
 
     render() {
+        this.petCards = document.querySelector('#pet-cards');
+
         this.card = document.createElement('div');
         this.card.className = 'pet-card';
 
@@ -107,7 +99,7 @@ class Tamagotchi {
         p.textContent = this.pet.type;
 
         this.card.append(h4, p, this.progress());
-        this.cards.appendChild(this.card);
+        this.petCards.appendChild(this.card);
     }
 
     progress() { // skapa ui
@@ -119,7 +111,7 @@ class Tamagotchi {
         napBtn.addEventListener('click', () => { // this = Tamagotchi och inte napBtn pga arrow f
             this.pet.nap()
             this.uppdateBars()
-            this.logActivities(`${this.pet.name} took a nap`)
+            this.activities.logActivities(`${this.pet.name} took a nap`)
         });
 
         const playBtn = document.createElement('button');
@@ -127,7 +119,7 @@ class Tamagotchi {
         playBtn.addEventListener('click', () => {
             this.pet.play()
             this.uppdateBars()
-            this.logActivities(`You played with ${this.pet.name}`)
+            this.activities.logActivities(`You played with ${this.pet.name}`)
         });
 
         const eatBtn = document.createElement('button');
@@ -135,7 +127,7 @@ class Tamagotchi {
         eatBtn.addEventListener('click', () => {
             this.pet.eat()
             this.uppdateBars()
-            this.logActivities(`Mums, you gave ${this.pet.name} some food`)
+            this.activities.logActivities(`Mums, you gave ${this.pet.name} some food`)
         });
 
         const energyText = document.createElement('small');
@@ -183,7 +175,7 @@ class Tamagotchi {
                 clearInterval(this.timer); // stoppar timer
                 this.card.remove(); // tar bort ui
                 petManager.removePet(this.pet); // tar bort från array
-                alert(`Pet ${this.pet.name} died, due to neglection...`)
+                this.activities.logActivities(`Pet ${this.pet.name} died, due to neglection...`);
             }
         }, 10000);
     }
@@ -193,25 +185,25 @@ class Tamagotchi {
 
 
 class Activities {
-    constructor(pet) {
-        this.pet = pet;
-
-        this.logActivities()
+    constructor() {
+        this.container = document.querySelector('#pet-activities');
+        this.noActivities = document.querySelector('#no-activities');
     }
 
     logActivities(log) {
-        const activitiesContainer = document.querySelector('#pet-activities');
-        const noActivity = document.querySelector('#no-activities');
-        const activity = document.createElement('p');
 
-        if (log) {
-            noActivity.remove();
-            activity.textContent += log;
+        if (this.noActivities) {
+            this.noActivities.remove();
+            this.noActivities = null;
         }
 
-        activitiesContainer.appendChild(activity);
+        const activity = document.createElement('p');
+        activity.textContent = log;
+
+        this.container.appendChild(activity);
     }
 }
+// instans för att kunna använda aktivitetsloggen
 const activities = new Activities();
 
 
@@ -223,7 +215,7 @@ const randomName = async () => {
     try {
         const response = await fetch('https://randomuser.me/api/0.8');
         const data = await response.json();
-        console.log(data.results[0].user.name.first)
+
         return data.results[0].user.name.first.toUpperCase();
 
     } catch (error) {
@@ -236,14 +228,13 @@ const randomName = async () => {
 
 
 
-
-
-// När Create Pet klickas:
-// Kolla igenom om det finns ett namn i inputfältet
-// Annars kalla på funktionen randomName
+let petBtn = document.querySelector('#pet-btn');
 
 petBtn.addEventListener('click', async (e) => {
     e.preventDefault();
+
+    let petNameInput = document.querySelector('#pet-name');
+    let petOption = document.querySelector('#pet-option');
 
     let name = petNameInput.value;
     let type = petOption.value;
@@ -257,5 +248,5 @@ petBtn.addEventListener('click', async (e) => {
     const pet = new Pet(name, type);
     if (!petManager.addPet(pet)) return; // stoppar om arrayen är full
 
-    new Tamagotchi(pet, petCards);
+    new Tamagotchi(pet, activities);
 });
