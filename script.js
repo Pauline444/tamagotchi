@@ -48,22 +48,33 @@ class Pet {
 
         if (this.type === 'dog') {
             let img = document.createElement('img');
-            img.src = 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg';
+            img.src = 'images/e2458830-4158-436c-870b-ba0d0fa594c6.jpg';
             return img;
         }
         if (this.type === 'ginuepig') {
-
+            let img = document.createElement('img');
+            img.src = 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg';
+            return img;
         }
         if (this.type === 'cat') {
-
+            let img = document.createElement('img');
+            img.src = 'images/5f45b95f-82fa-4949-a2b4-d2aadf330828.jpg';
+            return img;
         }
-        if (this.type === 'pig') {
-
+        if (this.type === 'jaguar') {
+            let img = document.createElement('img');
+            img.src = 'images/0cd404db-8ce3-4952-80ee-c41f6c002f17.jpg';
+            return img;
         }
     }
 }
 
-
+const images = {
+    dog: 'images/e2458830-4158-436c-870b-ba0d0fa594c6.jpg',
+    ginuepig: 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg',
+    cat: 'images/5f45b95f-82fa-4949-a2b4-d2aadf330828.jpg',
+    jaguar: 'images/0cd404db-8ce3-4952-80ee-c41f6c002f17.jpg'
+}
 
 
 
