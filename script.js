@@ -57,9 +57,8 @@ class Pet {
 
 
 
-// hålla lista på pets
-// starta timers
-// ta bort pet när värde = 0
+// hålla lista på vad man gör med pets
+
 
 class PetManager {
     constructor() {
@@ -91,13 +90,9 @@ class Tamagotchi {
     constructor(pet, cards) {
         this.pet = pet;
         this.cards = cards;
-        this.card = null;
-
-        this.energy = null;
-        this.fullness = null;
-        this.happiness = null;
 
         this.render()
+        this.decreaseTime()
     }
 
     render() {
@@ -121,9 +116,10 @@ class Tamagotchi {
 
         const napBtn = document.createElement('button');
         napBtn.textContent = 'nap';
-        napBtn.addEventListener('click', () => {
+        napBtn.addEventListener('click', () => { // this = Tamagotchi och inte napBtn pga arrow f
             this.pet.nap()
             this.uppdateBars()
+            this.logActivities(`${this.pet.name} took a nap`)
         });
 
         const playBtn = document.createElement('button');
@@ -131,6 +127,7 @@ class Tamagotchi {
         playBtn.addEventListener('click', () => {
             this.pet.play()
             this.uppdateBars()
+            this.logActivities(`You played with ${this.pet.name}`)
         });
 
         const eatBtn = document.createElement('button');
@@ -138,6 +135,7 @@ class Tamagotchi {
         eatBtn.addEventListener('click', () => {
             this.pet.eat()
             this.uppdateBars()
+            this.logActivities(`Mums, you gave ${this.pet.name} some food`)
         });
 
         const energyText = document.createElement('small');
@@ -172,10 +170,49 @@ class Tamagotchi {
         this.fullnessBar.value = this.pet.fullness;
     }
 
-    timer() {
+    decreaseTime() {
+        this.timer = setInterval(() => {
+            this.pet.energy -= 10;
+            this.pet.fullness -= 10;
+            this.pet.happiness -= 10;
 
+            this.pet.progressValues();
+            this.uppdateBars();
+
+            if (this.pet.energy <= 0 || this.pet.fullness <= 0 || this.pet.happiness <= 0) {
+                clearInterval(this.timer); // stoppar timer
+                this.card.remove(); // tar bort ui
+                petManager.removePet(this.pet); // tar bort från array
+                alert(`Pet ${this.pet.name} died, due to neglection...`)
+            }
+        }, 10000);
     }
 }
+
+
+
+
+class Activities {
+    constructor(pet) {
+        this.pet = pet;
+
+        this.logActivities()
+    }
+
+    logActivities(log) {
+        const activitiesContainer = document.querySelector('#pet-activities');
+        const noActivity = document.querySelector('#no-activities');
+        const activity = document.createElement('p');
+
+        if (log) {
+            noActivity.remove();
+            activity.textContent += log;
+        }
+
+        activitiesContainer.appendChild(activity);
+    }
+}
+const activities = new Activities();
 
 
 
