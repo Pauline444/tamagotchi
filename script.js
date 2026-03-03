@@ -1,13 +1,6 @@
 'use strict';
 
 
-const images = {
-    dog: 'images/e2458830-4158-436c-870b-ba0d0fa594c6.jpg',
-    ginuepig: 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg',
-    cat: 'images/5f45b95f-82fa-4949-a2b4-d2aadf330828.jpg',
-    jaguar: 'images/0cd404db-8ce3-4952-80ee-c41f6c002f17.jpg'
-}
-
 
 
 
@@ -19,6 +12,13 @@ class Pet {
         this.fullness = 50;
         this.happiness = 50;
     }
+
+    images = {
+        dog: 'images/e2458830-4158-436c-870b-ba0d0fa594c6.jpg',
+        ginuepig: 'images/4eefad81-1549-41fd-9a89-a40be795deac.jpg',
+        cat: 'images/5f45b95f-82fa-4949-a2b4-d2aadf330828.jpg',
+        jaguar: 'images/0cd404db-8ce3-4952-80ee-c41f6c002f17.jpg'
+    };
 
     nap() {
         this.energy += 40;
@@ -54,7 +54,7 @@ class Pet {
 
     petPicture() {
         let img = document.createElement('img');
-        img.src = images[this.type] || images.dog;
+        img.src = this.images[this.type] || this.images.dog;
         img.alt = `Image of ${this.type}`;
 
         return img;
@@ -85,7 +85,7 @@ class PetManager {
         this.pets = this.pets.filter(p => p !== pet);
     }
 }
-// Instans för att kunna använda add och remove
+// Instans för att kunna använda add och remove metoderna
 const petManager = new PetManager();
 
 
@@ -124,7 +124,7 @@ class Tamagotchi {
 
         const napBtn = document.createElement('button');
         napBtn.textContent = 'nap';
-        napBtn.addEventListener('click', () => { // this = Tamagotchi och inte napBtn pga arrow f
+        napBtn.addEventListener('click', () => {
             this.pet.nap()
             this.uppdateBars()
             this.activities.logActivities(`${this.pet.name} took a nap`)
@@ -188,7 +188,7 @@ class Tamagotchi {
             this.uppdateBars();
 
             if (this.pet.energy <= 0 || this.pet.fullness <= 0 || this.pet.happiness <= 0) {
-                clearInterval(this.timer); // stoppar timer
+                clearInterval(this.timer); // stoppar timer - Annars fortsätter fast jag tar bort 
                 this.card.remove(); // tar bort ui
                 petManager.removePet(this.pet); // tar bort från array
                 this.activities.logActivities(`Pet ${this.pet.name} died, due to neglection...`);
@@ -252,7 +252,7 @@ petBtn.addEventListener('click', async (e) => {
     let petNameInput = document.querySelector('#pet-name');
     let petOption = document.querySelector('#pet-option');
 
-    let name = petNameInput.value;
+    let name = petNameInput.value.toUpperCase();
     let type = petOption.value;
 
     petNameInput.value = "";

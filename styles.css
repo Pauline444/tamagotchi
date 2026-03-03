@@ -5,9 +5,11 @@
 }
 
 body {
+    background-color: #b0ffd9;
     color: rgb(44, 44, 44);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 100vw;
+    font-size: 16px;
 }
 
 #hero {
@@ -19,13 +21,15 @@ body {
 }
 
 #hero .paws {
-    font-size: 80px;
-    margin-right: 50px;
+    font-size: 3rem;
+    margin-right: 1rem;
 }
 
 #hero h1 {
-    font-size: 3rem;
-    letter-spacing: 1px;
+    color: #6846ff;
+    font-size: 3.5rem;
+    letter-spacing: 0.1rem;
+    font-variant: small-caps;
 }
 
 main {
@@ -47,9 +51,11 @@ main {
 
 #pet-properties,
 #pet-activities {
-    max-width: 450px;
+    min-height: 360px;
+    max-width: 30rem;
     background: white;
     padding: 1.6rem;
+    margin: 1rem;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -93,11 +99,8 @@ main {
     transform: translateY(-2px);
 }
 
-#pet-activities {
-    min-height: 310px;
-}
-
 #pet-container {
+    text-align: center;
     width: 100%;
     padding: 1.5rem;
     margin: 1rem;
@@ -178,9 +181,43 @@ main {
     transform: translateY(-2px);
 }
 
+progress[value]::-webkit-progress-bar {
+    background-color: white;
+}
 
-@media (max-width: 950px) {
+progress[value] {
+    /* Get rid of default border in Firefox. */
+    border: none;
+    height: 4px;
+    border-radius: 20px;
+    background-color: white;
+    margin-bottom: 8px;
+}
+
+
+@media (max-width: 60rem) {
     .data-container {
         flex-direction: column;
+    }
+
+    #hero h1 {
+        font-size: 3rem;
+        letter-spacing: 0rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    body {
+        font-size: 13px;
+    }
+
+    #hero .paws {
+        font-size: 2.5rem;
+        margin-right: 0.5rem;
+    }
+
+    #hero h1 {
+        font-size: 2.5rem;
+        letter-spacing: 0rem;
     }
 }
